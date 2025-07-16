@@ -87,14 +87,14 @@ const App = () => {
     },
   ])
 
-  const handleAddFighter = (zombie) => {
-    if (money >= zombie.price) {
-      const copyTeam = [...team, zombie]
+  const handleAddFighter = (fighter) => {
+    if (money >= fighter.price) {
+      const copyTeam = [...team, fighter]
       setTeam(copyTeam)
       setZombieFighters(
-        zombieFighters.filter(fighter => fighter.id !== zombie.id)
+        zombieFighters.filter(soldier => soldier.id !== fighter.id)
       );
-      setMoney(money - zombie.price)
+      setMoney(money - fighter.price)
     } else {
       console.log('You do not have enough money!')
     }
@@ -104,15 +104,30 @@ const App = () => {
     <>
       <h1>Zombie Fighters</h1>
       <h2>Money: {money}</h2>
+      <h2>Team:</h2>
       <ul>
-        {zombieFighters.map(zombie => (
-          <li key={zombie.id}>
-            <img src={zombie.img} alt="zombie img" />
-            <p>{zombie.name}</p>
-            <p>{zombie.price}</p>
-            <p>{zombie.strength}</p>
-            <p>{zombie.agility}</p>
-            <button onClick={() => handleAddFighter(zombie)}> Add</button>
+        {team && team.length > 0 ? (team.map(fighter => (
+          <li key={fighter.id}>
+            <img src={fighter.img} alt="fighter img" />
+            <p>Name: {fighter.name}</p>
+            <p>Price: {fighter.price}</p>
+            <p>Strength: {fighter.strength}</p>
+            <p>Agility: {fighter.agility}</p>
+            <button onClick={() => handleAddFighter(fighter)}> Add</button>
+          </li>
+        ))) : (<p>You do not have any fighter in your team</p>)
+        }
+      </ul>
+      <h2>Fighters:</h2>
+      <ul>
+        {zombieFighters.map(fighter => (
+          <li key={fighter.id}>
+            <img src={fighter.img} alt="fighter img" />
+            <p>Name: {fighter.name}</p>
+            <p>Price: {fighter.price}</p>
+            <p>Strength{fighter.strength}</p>
+            <p>Agility: {fighter.agility}</p>
+            <button onClick={() => handleAddFighter(fighter)}> Add</button>
           </li>
         ))}
       </ul>
