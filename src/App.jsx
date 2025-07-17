@@ -86,6 +86,7 @@ const App = () => {
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/e41f26.png',
     },
   ])
+  
 
   const handleAddFighter = (fighter) => {
     if (money >= fighter.price) {
@@ -100,10 +101,23 @@ const App = () => {
     }
   }
 
+  const handleRemoveFighter = (fighter)=>{
+    setTeam(team.filter(teamfighter =>( teamfighter.id !== fighter.id)))
+    const copyZombieFighters = [...zombieFighters, fighter]
+    setZombieFighters(copyZombieFighters)
+    setMoney( money + fighter.price)
+  }
+
   return (
     <>
       <h1>Zombie Fighters</h1>
       <h2>Money: {money}</h2>
+      <h2>Strength: {team.reduce((sum,fighter)=>{
+        return sum + fighter.strength
+      }, 0)}</h2>
+      <h2>Agility: {team.reduce((sum,fighter)=>{
+        return sum + fighter.agility
+      }, 0)}</h2>
       <h2>Team:</h2>
       <ul>
         {team && team.length > 0 ? (team.map(fighter => (
@@ -113,7 +127,7 @@ const App = () => {
             <p>Price: {fighter.price}</p>
             <p>Strength: {fighter.strength}</p>
             <p>Agility: {fighter.agility}</p>
-            <button onClick={() => handleAddFighter(fighter)}> Add</button>
+            <button onClick={() => handleRemoveFighter(fighter)}> Remove</button>
           </li>
         ))) : (<p>You do not have any fighter in your team</p>)
         }
@@ -125,7 +139,7 @@ const App = () => {
             <img src={fighter.img} alt="fighter img" />
             <p>Name: {fighter.name}</p>
             <p>Price: {fighter.price}</p>
-            <p>Strength{fighter.strength}</p>
+            <p>Strength: {fighter.strength}</p>
             <p>Agility: {fighter.agility}</p>
             <button onClick={() => handleAddFighter(fighter)}> Add</button>
           </li>
